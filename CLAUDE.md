@@ -17,7 +17,7 @@ npm run preview   # preview the production build locally
 
 There is no test suite and no linter configured in this repo.
 
-Because routing is client-side, any static host needs a SPA rewrite rule (fall back to `index.html` for unknown paths) so routes like `/about` work on refresh/direct link. `public/_redirects` handles this for Cloudflare Pages (see Deployment below).
+Because routing is client-side, any static host needs a SPA rewrite rule (fall back to `index.html` for unknown paths) so routes like `/about` work on refresh/direct link. `wrangler.jsonc`'s `assets.not_found_handling` handles this for Cloudflare Pages (see Deployment below).
 
 ## Architecture
 
@@ -36,7 +36,7 @@ Because routing is client-side, any static host needs a SPA rewrite rule (fall b
 
 ## Deployment
 
-Deployed via Cloudflare Pages' own Git integration (dashboard-connected to this repo) — no GitHub Actions workflow. Build command `npm run build`, output directory `dist`. `public/_redirects` (`/* /index.html 200`) is what makes Cloudflare Pages serve the SPA for any client-side route instead of 404ing. The custom domain (`www.dannyzionconsult.com`) is attached to the Pages project via the Cloudflare dashboard, not a file in this repo.
+Deployed via Cloudflare Pages' own Git integration (dashboard-connected to this repo) — no GitHub Actions workflow. Build command `npm run build`, output directory `dist`. This account deploys Pages projects on Cloudflare's newer Workers-with-static-assets platform (the build logs hit `workers/scripts/<project>`, not the classic Pages API), so SPA fallback is configured via `wrangler.jsonc`'s `assets.not_found_handling: "single-page-application"` rather than a `public/_redirects` catch-all — a `/* /index.html 200` `_redirects` rule fails to deploy on this platform ("Infinite loop detected... strip `.html` or `/index`") because it collides with the platform's automatic clean-URL redirects. Don't reintroduce `_redirects` for SPA routing. The custom domain (`www.dannyzionconsult.com`) is attached to the Pages project via the Cloudflare dashboard, not a file in this repo.
 
 ## Styling
 

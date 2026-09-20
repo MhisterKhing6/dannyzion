@@ -27,7 +27,7 @@ Deployed via the Cloudflare Pages dashboard's Git integration (connect this repo
 - **Build command:** `npm run build`
 - **Build output directory:** `dist`
 
-`public/_redirects` (`/* /index.html 200`) makes Cloudflare Pages serve `index.html` for every path, so client-side routes like `/about` and `/gallery` resolve on refresh/direct link. Add the custom domain **www.dannyzionconsult.com** under the Pages project's **Custom domains** tab.
+`wrangler.jsonc` configures SPA fallback (`assets.not_found_handling: "single-page-application"`) so client-side routes like `/about` and `/gallery` resolve on refresh/direct link — this account's Pages projects deploy on Cloudflare's Workers-with-assets platform, where a classic `public/_redirects` catch-all (`/* /index.html 200`) fails to deploy with an "infinite loop" error, since it conflicts with the platform's built-in clean-URL redirects. Add the custom domain **www.dannyzionconsult.com** under the Pages project's **Custom domains** tab.
 
 ## SEO
 
