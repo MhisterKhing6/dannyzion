@@ -1,0 +1,13 @@
+{
+  "name": "DannyZion Art Consult",
+  "short_name": "DannyZion",
+  "description": "Art and interior design consultancy in Kumasi, Ghana.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f3f2f2",
+  "theme_color": "#ec3013",
+  "icons": [
+    { "src": "/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

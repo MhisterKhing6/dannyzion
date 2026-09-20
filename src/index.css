@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+body {
+  margin: 0;
+}
+
+@property --loader-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes loader-spin {
+  to {
+    --loader-angle: 360deg;
+  }
+}
+
+@keyframes wa-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-ink font-body text-[15px] leading-[1.55];
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-extrabold leading-tight tracking-[-0.015em];
+  }
+  a {
+    @apply text-accent;
+    text-decoration: none;
+  }
+  a:hover {
+    color: theme('colors.accent.700');
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 cursor-pointer font-heading font-extrabold text-sm px-4 py-2 border border-transparent select-none whitespace-nowrap;
+  }
+  .btn-primary {
+    @apply bg-accent text-bg hover:bg-accent-600 active:bg-accent-700;
+  }
+  .btn-secondary {
+    @apply border-divider hover:bg-black/5 active:bg-black/10;
+  }
+  .btn-ghost {
+    @apply text-accent px-1 hover:bg-accent-100 active:bg-accent-200;
+  }
+  .btn-icon {
+    @apply w-9 h-9 p-0;
+  }
+  .btn-block {
+    @apply w-full justify-start text-left;
+  }
+  .card {
+    @apply flex flex-col gap-2 p-3 bg-surface;
+  }
+  .elev-sm {
+    box-shadow: theme('boxShadow.sm');
+  }
+  .elev-md {
+    box-shadow: theme('boxShadow.md');
+  }
+  .tag {
+    @apply inline-flex items-center text-[11px] tracking-wide px-2.5 py-1 border border-accent text-accent;
+  }
+  .loader-frame::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    padding: 2px;
+    background: conic-gradient(from var(--loader-angle), transparent 0%, transparent 78%, #ec3013 92%, transparent 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: loader-spin 1.8s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .loader-frame::before {
+      animation: none;
+    }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+  .wa-pulse {
+    animation: wa-pulse 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wa-pulse {
+      animation: none;
+      opacity: 0;
+    }
+  }
+}
