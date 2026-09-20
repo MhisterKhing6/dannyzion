@@ -17,7 +17,7 @@ npm run preview   # preview the production build locally
 
 There is no test suite and no linter configured in this repo.
 
-Because routing is client-side, any static host needs a SPA rewrite rule (fall back to `index.html` for unknown paths) so routes like `/about` work on refresh/direct link. `.github/workflows/deploy.yml` handles this for the production deploy (see Deployment below).
+Because routing is client-side, any static host needs a SPA rewrite rule (fall back to `index.html` for unknown paths) so routes like `/about` work on refresh/direct link. `public/_redirects` handles this for Cloudflare Pages (see Deployment below).
 
 ## Architecture
 
@@ -36,7 +36,7 @@ Because routing is client-side, any static host needs a SPA rewrite rule (fall b
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds on every push to `main` and deploys to GitHub Pages via `actions/upload-pages-artifact` + `actions/deploy-pages` (requires the repo's Pages source set to "GitHub Actions" in Settings — a one-time manual step). It copies `dist/index.html` to `dist/404.html` after building so GitHub Pages' 404 fallback serves the SPA for any client-side route. `public/CNAME` pins the custom domain (`www.dannyzionconsult.com`); the matching DNS `CNAME` record and "Enforce HTTPS" toggle are also one-time manual steps outside this repo.
+`.github/workflows/deploy.yml` builds on every push to `main` and deploys `dist/` to Cloudflare Pages via `cloudflare/pages-action`, targeting the Pages project named `dannyzion` (must exist in the Cloudflare dashboard first, and `projectName` in the workflow must match if renamed). It needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` set as GitHub repo secrets — one-time manual steps, done outside this repo. `public/_redirects` (`/* /index.html 200`) is what makes Cloudflare Pages serve the SPA for any client-side route instead of 404ing. The custom domain (`www.dannyzionconsult.com`) is attached to the Pages project via the Cloudflare dashboard, not a file in this repo.
 
 ## Styling
 
