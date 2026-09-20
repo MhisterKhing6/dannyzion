@@ -22,13 +22,12 @@ npm run preview   # preview the production build locally
 
 ## Deployment (Cloudflare Pages)
 
-`.github/workflows/deploy.yml` builds the site and deploys `dist/` to Cloudflare Pages on every push to `main`, via `cloudflare/pages-action`. `public/_redirects` (`/* /index.html 200`) makes Cloudflare Pages serve `index.html` for every path, so client-side routes like `/about` and `/gallery` resolve on refresh/direct link.
+Deployed via the Cloudflare Pages dashboard's Git integration (connect this repo, no GitHub Actions involved). Build settings:
 
-One-time setup required outside this repo:
+- **Build command:** `npm run build`
+- **Build output directory:** `dist`
 
-1. In the Cloudflare dashboard, create a Pages project named **`dannyzion`** (or update `projectName` in `deploy.yml` to match whatever you name it) — connecting it to this GitHub repo is optional since the GitHub Action pushes builds directly; if you do connect it via Git for Cloudflare's own build step too, disable that build (or set its build command to a no-op) to avoid deploying twice.
-2. In the GitHub repo's **Settings → Secrets and variables → Actions**, add `CLOUDFLARE_API_TOKEN` (a token with "Cloudflare Pages — Edit" permission) and `CLOUDFLARE_ACCOUNT_ID`.
-3. In the Cloudflare Pages project's **Custom domains**, add **www.dannyzionconsult.com** (Cloudflare will prompt for the DNS record if the domain's zone is already on Cloudflare; otherwise add a `CNAME` record for `www` pointing at the project's `*.pages.dev` hostname at your DNS provider).
+`public/_redirects` (`/* /index.html 200`) makes Cloudflare Pages serve `index.html` for every path, so client-side routes like `/about` and `/gallery` resolve on refresh/direct link. Add the custom domain **www.dannyzionconsult.com** under the Pages project's **Custom domains** tab.
 
 ## SEO
 

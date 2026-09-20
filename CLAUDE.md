@@ -36,7 +36,7 @@ Because routing is client-side, any static host needs a SPA rewrite rule (fall b
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds on every push to `main` and deploys `dist/` to Cloudflare Pages via `cloudflare/pages-action`, targeting the Pages project named `dannyzion` (must exist in the Cloudflare dashboard first, and `projectName` in the workflow must match if renamed). It needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` set as GitHub repo secrets — one-time manual steps, done outside this repo. `public/_redirects` (`/* /index.html 200`) is what makes Cloudflare Pages serve the SPA for any client-side route instead of 404ing. The custom domain (`www.dannyzionconsult.com`) is attached to the Pages project via the Cloudflare dashboard, not a file in this repo.
+Deployed via Cloudflare Pages' own Git integration (dashboard-connected to this repo) — no GitHub Actions workflow. Build command `npm run build`, output directory `dist`. `public/_redirects` (`/* /index.html 200`) is what makes Cloudflare Pages serve the SPA for any client-side route instead of 404ing. The custom domain (`www.dannyzionconsult.com`) is attached to the Pages project via the Cloudflare dashboard, not a file in this repo.
 
 ## Styling
 
